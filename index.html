@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Nonprofit Job Aggregator</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { font-size: 24px; }
+    .source-select { margin-bottom: 1em; }
+    .job-listing { margin-bottom: 1.5em; padding: 1em; border: 1px solid #ccc; border-radius: 8px; }
+    .job-title { font-weight: bold; font-size: 18px; }
+    .job-source { font-style: italic; color: gray; }
+  </style>
+</head>
+<body>
+  <h1>Remote Nonprofit Job Aggregator</h1>
+  <div class="source-select">
+    <label>
+      <input type="checkbox" id="googleJobs" checked /> Google Jobs
+    </label>
+    <label>
+      <input type="checkbox" id="idealist" checked /> Idealist.org
+    </label>
+    <label>
+      <input type="checkbox" id="flexjobs" checked /> FlexJobs
+    </label>
+    <label>
+      <input type="checkbox" id="workforgood" checked /> WorkForGood.org
+    </label>
+    <label>
+      <input type="checkbox" id="higheredjobs" checked /> HigherEdJobs.com
+    </label>
+    <label>
+      <input type="checkbox" id="globaljobs" checked /> GlobalJobs.org
+    </label>
+    <label>
+      <input type="checkbox" id="linkedin" checked /> LinkedIn
+    </label>
+    <button onclick="fetchJobs()">Fetch Jobs</button>
+  </div>
+
+  <div id="results"></div>
+
+  <script>
+    async function fetchJobs() {
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "<p>Loading...</p>";
+
+      const googleJobs = document.getElementById("googleJobs").checked;
+      const idealist = document.getElementById("idealist").checked;
+      const flexjobs = document.getElementById("flexjobs").checked;
+      const workforgood = document.getElementById("workforgood").checked;
+      const higheredjobs = document.getElementById("higheredjobs").checked;
+      const globaljobs = document.getElementById("globaljobs").checked;
+      const linkedin = document.getElementById("linkedin").checked;
+
+      let results = [];
+
+      if (googleJobs) {
+        results.push({
+          title: "Remote Nonprofit Program Manager",
+          source: "Google Jobs",
+          link: "https://www.google.com/search?q=remote+nonprofit+program+manager"
+        });
+      }
+
+      if (idealist) {
+        results.push({
+          title: "Remote Grant Writer",
+          source: "Idealist.org",
+          link: "https://www.idealist.org/en/jobs?q=remote+nonprofit"
+        });
+      }
+
+      if (flexjobs) {
+        results.push({
+          title: "Remote Operations Coordinator",
+          source: "FlexJobs",
+          link: "https://www.flexjobs.com/search?search=nonprofit&location=remote"
+        });
+      }
+
+      if (workforgood) {
+        results.push({
+          title: "Remote Nonprofit Positions",
+          source: "WorkForGood.org",
+          link: "https://www.workforgood.org/jobs/remote/"
+        });
+      }
+
+      if (higheredjobs) {
+        results.push({
+          title: "Remote Higher Ed Nonprofit Jobs",
+          source: "HigherEdJobs.com",
+          link: "https://www.higheredjobs.com/remote/"
+        });
+      }
+
+      if (globaljobs) {
+        results.push({
+          title: "Remote International Nonprofit Jobs",
+          source: "GlobalJobs.org",
+          link: "https://www.globaljobs.org/jobs/remote"
+        });
+      }
+
+      if (linkedin) {
+        results.push({
+          title: "Remote Nonprofit Openings",
+          source: "LinkedIn",
+          link: "https://www.linkedin.com/jobs/search/?keywords=remote%20501c3%20nonprofit"
+        });
+      }
+
+      renderJobs(results);
+    }
+
+    function renderJobs(jobs) {
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+      jobs.forEach(job => {
+        const div = document.createElement("div");
+        div.className = "job-listing";
+        div.innerHTML = `
+          <div class="job-title">${job.title}</div>
+          <div class="job-source">Source: ${job.source}</div>
+          <div><a href="${job.link}" target="_blank">View Job</a></div>
+        `;
+        resultsDiv.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
